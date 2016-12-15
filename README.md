@@ -1,4 +1,4 @@
-# cmdfetch
+# CMDfetch
 Homage to [screenFetch](https://github.com/KittyKatt/screenFetch) by [KittyKatt](http://www.kittykatt.us/) made for Windows using BATCH.
 
 ## Usage
