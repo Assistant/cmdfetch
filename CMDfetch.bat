@@ -720,10 +720,16 @@ echo.
 echo.
 set /a blockstotal=%sectors% / 2
 set /a blocks=%blockstotal% - 4219904
+>x ECHO.%sectors%&FOR %%? IN (x) DO SET /A secdiglen=%%~z? - 2&del x
+set /a secpadding=12 - %secdiglen%
+for /l %%x in (1,1,%secpadding%) do (call :secpadder)
+>x ECHO.%blocks%&FOR %%? IN (x) DO SET /A blkdiglen=%%~z? - 2&del x
+set /a blkpadding=12 - %blkdiglen%
+for /l %%x in (1,1,%blkpadding%) do (call :blkpadder)
 echo    Device Boot      Start         End      Blocks   Id  System
 echo /dev/sda1               1       51200       25600   83  Linux 
 echo /dev/sda2           51201     8439808     4194304   83  Linux 
-echo /dev/sda3         8439809   %sectors%    %blocks%   83  Linux 
+echo /dev/sda3         8439809%secpad%%sectors%%blkpad%%blocks%   83  Linux 
 echo.
 echo.
 colous 7 0 0,0 "Command (m for help): "
@@ -731,7 +737,7 @@ colous sleep 700
 colous 7 0 0,0 t
 colous sleep 150
 echo.
-colous 7 0 0,0 "Psrtition numbrt (1-4): "
+colous 7 0 0,0 "Partition numbrt (1-4): "
 colous sleep 700
 colous 7 0 0,0 2
 colous sleep 150
@@ -793,8 +799,15 @@ colous Writesec "[2]  Anonymous"
 colous Writesec "[2]  Developer"
 colous Writesec "[2]  Jz9 [10]^!//QwUWqnYY"
 echo.
-echo.CMDfetch v.1.23
+echo.CMDfetch v.1.23.1
 
 pause>nul
 colous cursoron
 goto :EOF
+
+:secpadder
+set "secpad=%secpad% "
+GOTO :EOF
+:blkpadder
+set "blkpad=%blkpad% "
+GOTO :EOF
